@@ -421,10 +421,12 @@ function getCurrentPage ($itemOriginalName) {
     $mediaWikiPageContentFullUrl = $mediaWikiCoreUrl + $mediaWikiPageContentPartialUrl + $itemOriginalName
     $res = Invoke-WebRequest -Uri $mediaWikiPageContentFullUrl -WebSession (Get-WebSession)| ConvertFrom-Json
     $isMissing = $res.query.pages.psobject.properties.value.missing -eq ''
+    #$isMissing = $res.Content -eq ''
     $content = ''
 
     if(-Not $isMissing) {
         $content = $res.query.pages.psobject.properties.value.revisions[0].'*'
+        #$content = $res.Content
     }
     
     return $content
@@ -548,8 +550,9 @@ function isParentCategoryLink($line) {
 }
 
 function createPage($path, $content) {
-    New-Item -ItemType file -Force -Path $path
-    [System.IO.File]::WriteAllLines($path, $content)
+    $outfile = New-Item -ItemType file -Force -Path $path
+    #[System.IO.File]::WriteAllLines($path, $content)
+    Out-File -InputObject $content -FilePath $path
 }
 
 #------------------------------------------------------------------
@@ -917,8 +920,8 @@ function removeRootCategoryPage() {
 }
 
 function migrateToVSTSWiki() {
-    Write-Host '---Fetching existing VSTS Wiki---'
-    initializeGit # does NOT create wiki for now
+    # Write-Host '---Fetching existing VSTS Wiki---'
+    # initializeGit # does NOT create wiki for now
 
     Write-Host '---Getting All Images---'
     getAllImages 
@@ -965,8 +968,8 @@ function migrateToVSTSWiki() {
     
     }
 
-    Write-Host '---Pushing to  VSTS Wiki---'
-    pushVSTSWiki
+    # Write-Host '---Pushing to  VSTS Wiki---'
+    # pushVSTSWiki
 }
 
 migrateToVSTSWiki
