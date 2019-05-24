@@ -56,6 +56,8 @@ $allTemplatesPathMap = @{} #case insensitive
 $uniqueNameashTable =  New-CHashtable
 $donePaths = New-CHashtable
 
+$specialCharReplaceCount = 0
+
 #------------------------------------------------------------------
 #---------------------------General Methods------------------------------------
 #------------------------------------------------------------------
@@ -138,6 +140,7 @@ function replaceUnderscoreInPageName($pageName) {
 
 function replaceSpecialCharacters($pathName) {
 
+    $specialCharReplaceCount += 1
     #Encoded
     $pathName = $pathName.Replace(':','%3A')
     $pathName = $pathName.Replace('>','%3E')
@@ -973,3 +976,5 @@ function migrateToVSTSWiki() {
 }
 
 migrateToVSTSWiki
+
+Write-Host '\n\n**** Replaced special chars ' $specialCharReplaceCount ' times.\n'

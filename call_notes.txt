@@ -1,0 +1,10 @@
+cmdlet mediaWikiMigrate.ps1 at command pipeline position 1
+Supply values for the following parameters:
+(Type !? for Help.)
+mediWikiUrl: http://clawiki01.clearent.lan/ClearentWiki/
+imageDiskPath: .\images\
+u: dhale
+p: ****************
+o: .\output\
+vstsWikiRemoteUrl: https://dev.azure.com/DHaleClearent/WikiConversion/_wiki/wikis/WikiConversion
+pandocPath: c:\darren\apps\Pandoc\
